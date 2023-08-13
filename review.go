@@ -159,8 +159,6 @@ func askOpenAI(apiKey, model string, conversation []map[string]string) (string, 
 		return "", err
 	}
 
-	fmt.Println("Raw response from OpenAI:", string(body)) // Print the raw response
-
 	var result map[string]interface{}
 	if err := json.Unmarshal(body, &result); err != nil {
 		return "", err

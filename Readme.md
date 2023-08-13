@@ -1,36 +1,31 @@
-# Gepetto
-
-Gepetto-cli is a simple golang program to answer questions via OpenAI's API from the CLI.
+# Code Review Assistant
+This is a command-line tool that uses OpenAI's GPT language model to provide code review feedback. It can also be used in chat mode for conversational interaction with the model.
 
 ## Installation
+To use this tool, you'll need to have Go installed on your system. You can download it from the official website: https://golang.org/dl/
 
-To install Gepetto, you'll need to have Go installed on your system. You can download Go from the official website: https://golang.org/dl/.
+Once you have Go installed, you can download and install the tool using the following command:
 
-Once you have Go installed and you have cloned this repo, you can run a quick test :
-```
-export OPENAI_API_KEY=sk....
-go run gepetto 'What is the name of a famous Korean chilli sauce?'
-```
-And you should get a response
+go get github.com/openai/openai-review-assistant
 
-## Build & use the binary
+## Usage
+To use the tool, simply run the openai-review-assistant command followed by your message. For example:
 ```
-go build gepetto.go
-```
-Now you should have `./gepetto` as a binary (which you can move somewhere in your $PATH if you like).  You can run `gepetto` either on it's own with no arguments - in which case it will prompt you to type one in.  Or if you put your question after the command it will just use that.
-
-You can also pass a flag to read in the contents of a file to use as context (remember kids, don't upload proprietery/sensitve/personal info to an API...):
-
-```
-./gepetto --context=mydataset.csv 'What is the most common surname in this set of data?'
+review --context=src/thing.go "Please review my go code."
 ```
 
-You can also pass multiple files and/or STDIN.
+To enable chat mode, use the `--chat` flag. For example:
 ```
-cat some_text.txt | ./gepetto --context=mydataset.csv --context=~/system.log --context=-- 'What does any of this mean?!?!?'
+review --chat --context=src/thing.go "Please review my go code."
 ```
 
-You can also enter a chat mode if you think you'll want to ask multiple questions:
+## Configuration
+To use the tool, you'll need to set your OpenAI API key as an environment variable:
 ```
-cat some_text.txt | ./gepetto --context=-- --chat 'What is the reason for the errors in this file?'
+export OPENAI_API_KEY=sk-....
 ```
+
+You can also specify a different OpenAI model to use with the `--model` flag. The default model is gpt-3.5-turbo-16k.
+
+## License
+This tool is licensed under the MIT License. See the LICENSE file for more information.
