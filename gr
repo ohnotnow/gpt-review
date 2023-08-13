@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Fetch modified and untracked php files
+FILES=$(git status --porcelain | grep -E '^[MAU]. \.php$' | cut -c 4-)
+# Fetch modified and untracked go files
+FILES=$(git status --porcelain | grep -E '^[MAU]. \.go$' | cut -c 4-)
+
+# Check if no PHP files were found
+if [ -z "$FILES" ]; then
+    echo "No changed/unstaged files were found."
+    exit 0
+fi
+
+# Build the context argument string
+CONTEXT_ARGS=""
+for FILE in $FILES; do
+    CONTEXT_ARGS="$CONTEXT_ARGS --context=$FILE"
+done
+
+# Run the review command
+./review $CONTEXT_ARGS 'could you please look at these files and let me know of any issues?'
